@@ -55,14 +55,12 @@ class DigitRecognizer_NeuralNetwork(object):
         layer3_output = tf.nn.relu(layer3_output)
 
         output = tf.matmul(layer3_output, self.output_layer['weights']) + self.output_layer['biases']
-        return output
-       
+        return output   
 
     def train_NeuralNetwork(self, X_test = None, y_test = None):
         X_test = X_test if X_test is not None else self.validation_samples
         y_test = y_test if y_test is not None else self.validation_target
         prediction = self.NeuralNetwork_model()
-
         beta = 0.01
         no_of_batches=self.train_samples.shape[0]/self.batch_size
         regularizers =(tf.nn.l2_loss( self.hidden_layer_one['weights']) +  tf.nn.l2_loss(self.hidden_layer_two['weights']) + 
@@ -98,7 +96,6 @@ class DigitRecognizer_NeuralNetwork(object):
         sub_file = sub_df.to_csv('submission.csv', index=False)
         submission_set = pd.read_csv('submission.csv' , nrows= 10)
         print(submission_set)
-
 
 digit_neuralnetwork = DigitRecognizer_NeuralNetwork(epochs=100)
 digit_neuralnetwork.data_slices()
